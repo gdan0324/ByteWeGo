@@ -1,0 +1,20 @@
+name: Deploy to Tencent Cloud
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+env:
+  LIGHTHOUSE_PASS: ${{ secrets.LIGHTHOUSE_PASS }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repo
+        run: |
+          sshpass -p $LIGHTHOUSE_PASS ssh -o StrictHostKeyChecking=no lighthouse@43.143.150.154 'cd /home/lighthouse && git clone https://github.com/gdan0324/ByteWeGo.git && cd /home/lighthouse/ByteWeGo && docker compose up'
+          sshpass -p $LIGHTHOUSE_PASS ssh -o StrictHostKeyChecking=no lighthouse@43.143.150.154 'cd /home/lighthouse/ByteWeGo && docker build -f Dockerfile -t byte-we-go:v1'
+          sshpass -p $LIGHTHOUSE_PASS ssh -o StrictHostKeyChecking=no lighthouse@43.143.150.154 'cd /home/lighthouse/ByteWeGo && docker-compose up'
+          - sshpass -p $LIGHTHOUSE_PASS ssh -o StrictHostKeyChecking=no lighthouse@43.143.150.154 'docker rmi $(docker images -f "dangling=true" -q)'
