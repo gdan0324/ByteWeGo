@@ -1597,8 +1597,8 @@ func (p *CreateUserResponse) Field4DeepEqual(src string) bool {
 }
 
 type GetUserRequest struct {
-	UserId []int64 `thrift:"user_id,1" frugal:"1,default,list<i64>" json:"user_id"`
-	Token  string  `thrift:"token,2" frugal:"2,default,string" json:"token"`
+	UserId int64  `thrift:"user_id,1" frugal:"1,default,i64" json:"user_id"`
+	Token  string `thrift:"token,2" frugal:"2,default,string" json:"token"`
 }
 
 func NewGetUserRequest() *GetUserRequest {
@@ -1609,14 +1609,14 @@ func (p *GetUserRequest) InitDefault() {
 	*p = GetUserRequest{}
 }
 
-func (p *GetUserRequest) GetUserId() (v []int64) {
+func (p *GetUserRequest) GetUserId() (v int64) {
 	return p.UserId
 }
 
 func (p *GetUserRequest) GetToken() (v string) {
 	return p.Token
 }
-func (p *GetUserRequest) SetUserId(val []int64) {
+func (p *GetUserRequest) SetUserId(val int64) {
 	p.UserId = val
 }
 func (p *GetUserRequest) SetToken(val string) {
@@ -1648,7 +1648,7 @@ func (p *GetUserRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.LIST {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1698,23 +1698,10 @@ ReadStructEndError:
 }
 
 func (p *GetUserRequest) ReadField1(iprot thrift.TProtocol) error {
-	_, size, err := iprot.ReadListBegin()
-	if err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
-	}
-	p.UserId = make([]int64, 0, size)
-	for i := 0; i < size; i++ {
-		var _elem int64
-		if v, err := iprot.ReadI64(); err != nil {
-			return err
-		} else {
-			_elem = v
-		}
-
-		p.UserId = append(p.UserId, _elem)
-	}
-	if err := iprot.ReadListEnd(); err != nil {
-		return err
+	} else {
+		p.UserId = v
 	}
 	return nil
 }
@@ -1762,18 +1749,10 @@ WriteStructEndError:
 }
 
 func (p *GetUserRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("user_id", thrift.LIST, 1); err != nil {
+	if err = oprot.WriteFieldBegin("user_id", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteListBegin(thrift.I64, len(p.UserId)); err != nil {
-		return err
-	}
-	for _, v := range p.UserId {
-		if err := oprot.WriteI64(v); err != nil {
-			return err
-		}
-	}
-	if err := oprot.WriteListEnd(); err != nil {
+	if err := oprot.WriteI64(p.UserId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1825,16 +1804,10 @@ func (p *GetUserRequest) DeepEqual(ano *GetUserRequest) bool {
 	return true
 }
 
-func (p *GetUserRequest) Field1DeepEqual(src []int64) bool {
+func (p *GetUserRequest) Field1DeepEqual(src int64) bool {
 
-	if len(p.UserId) != len(src) {
+	if p.UserId != src {
 		return false
-	}
-	for i, v := range p.UserId {
-		_src := src[i]
-		if v != _src {
-			return false
-		}
 	}
 	return true
 }
