@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/gdan0324/ByteWeGo/api/pkg/consts"
-	"gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
+	Id            int64  `json:"user_id"`
 	Username      string `json:"username"`
 	Password      string `json:"password"`
 	FollowCount   string `json:"follow_count"`
@@ -35,8 +34,8 @@ func CreateUser(ctx context.Context, users []*User) error {
 }
 
 // QueryUser query list of user info
-func QueryUser(ctx context.Context, userName string) ([]*User, error) {
-	res := make([]*User, 0)
+func QueryUser(ctx context.Context, userName string) (*User, error) {
+	var res *User
 	if err := DB.WithContext(ctx).Where("username = ?", userName).Find(&res).Error; err != nil {
 		return nil, err
 	}

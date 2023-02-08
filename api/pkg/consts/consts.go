@@ -7,9 +7,8 @@ const (
 	Total         = "total"
 	Notes         = "notes"
 	// TODO: change to current service name
-	ApiServiceName  = "demoapi"
-	NoteServiceName = "demonote"
-	UserServiceName = "demouser"
+	ApiServiceName  = "apiservice"
+	UserServiceName = "userservice"
 	MySQLDefaultDSN = "root:n7Zs3usIM15HlkvQ@tcp(120.46.190.10:3306)/bytewego?charset=utf8&parseTime=True&loc=Local"
 	TCP             = "tcp"
 	// service address

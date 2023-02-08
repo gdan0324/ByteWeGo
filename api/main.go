@@ -4,9 +4,15 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/gdan0324/ByteWeGo/api/biz/rpc"
 )
 
+func Init() {
+	rpc.Init()
+}
+
 func main() {
+	Init()
 	h := server.Default()
 
 	register(h)

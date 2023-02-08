@@ -26,7 +26,7 @@ func (s *CreateUserService) CreateUser(req *userservice.CreateUserRequest) error
 	if err != nil {
 		return err
 	}
-	if len(users) != 0 {
+	if users != nil {
 		return errno.UserAlreadyExistErr
 	}
 
