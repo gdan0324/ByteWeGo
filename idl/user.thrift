@@ -41,7 +41,7 @@ struct CreateUserResponse {
 }
 
 struct GetUserRequest {
-    1: list<i64> user_id
+    1: i64 user_id
     2: string token
 }
 
