@@ -11,8 +11,5 @@ import (
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
 
-	// user routes
-	r.POST("/douyin/user/login", handler.CheckUser)
-	r.POST("/douyin/user/register", handler.CreateUser)
-	r.GET("/douyin/user", handler.GetUser)
+	// your code ...
 }
