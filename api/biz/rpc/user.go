@@ -36,27 +36,35 @@ func initUser() {
 	userClient = c
 }
 
-// CreateUser create user info
-func CreateUser(ctx context.Context, req *userservice.CreateUserRequest) error {
+// create user info
+func CreateUser(ctx context.Context, req *userservice.CreateUserRequest) (*userservice.CreateUserResponse, error) {
 	resp, err := userClient.CreateUser(ctx, req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	log.Println(resp)
-	// if resp.BaseResp.Code != 0 {
-	// 	return errno.NewErrNo(resp.BaseResp.Code, resp.BaseResp.Message)
-	// }
-	return nil
+
+	return resp, nil
 }
 
-// CheckUser check user info
-func CheckUser(ctx context.Context, req *userservice.CheckUserRequest) (int64, error) {
+// check user info
+func CheckUser(ctx context.Context, req *userservice.CheckUserRequest) (*userservice.CheckUserResponse, error) {
 	resp, err := userClient.CheckUser(ctx, req)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
-	// if resp.BaseResp.Code != 0 {
-	// 	return 0, errno.NewErrNo(resp.BaseResp.Code, resp.BaseResp.Message)
-	// }
-	return resp.UserId, nil
+	log.Println(resp)
+
+	return resp, nil
+}
+
+// get user info
+func GetUser(ctx context.Context, req *userservice.GetUserRequest) (*userservice.GetUserResponse, error) {
+	resp, err := userClient.GetUser(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	log.Println(resp)
+
+	return resp, nil
 }

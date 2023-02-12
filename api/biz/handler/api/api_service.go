@@ -4,10 +4,13 @@ package api
 
 import (
 	"context"
+	"log"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	api "github.com/gdan0324/ByteWeGo/api/biz/model/api"
+	"github.com/gdan0324/ByteWeGo/api/biz/rpc"
+	"github.com/gdan0324/ByteWeGo/api/kitex_gen/userservice"
 )
 
 // CheckUser .
@@ -21,7 +24,15 @@ func CheckUser(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.CheckUserResponse)
+	log.Println(req)
+	resp, err := rpc.CheckUser(context.Background(), &userservice.CheckUserRequest{
+		Username: req.Username,
+		Password: req.Password,
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }
@@ -37,7 +48,14 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.CreateUserResponse)
+	resp, err := rpc.CreateUser(context.Background(), &userservice.CreateUserRequest{
+		Username: req.Username,
+		Password: req.Password,
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }
@@ -53,7 +71,14 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.GetUserResponse)
+	resp, err := rpc.GetUser(context.Background(), &userservice.GetUserRequest{
+		UserId: req.UserID,
+		Token:  req.Token,
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }
