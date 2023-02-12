@@ -20,7 +20,10 @@ func CheckUser(ctx context.Context, c *app.RequestContext) {
 	var req api.CheckUserRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		c.JSON(consts.StatusOK, &userservice.CheckUserResponse{
+			StatusCode: 1,
+			StatusMsg:  "缺少用户名或密码",
+		})
 		return
 	}
 
@@ -44,7 +47,10 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 	var req api.CreateUserRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		c.JSON(consts.StatusOK, &userservice.CheckUserResponse{
+			StatusCode: 1,
+			StatusMsg:  "缺少用户名或密码",
+		})
 		return
 	}
 
@@ -67,7 +73,9 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 	var req api.GetUserRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		c.JSON(consts.StatusOK, &userservice.CheckUserResponse{
+			StatusCode: 1,
+		})
 		return
 	}
 

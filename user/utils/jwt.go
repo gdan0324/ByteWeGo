@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GnerateToken(userId string) (string, error) {
+func GnerateToken(userId int64) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Hour * 24 * 7)
 	issuer := "ByteWeGo"

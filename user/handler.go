@@ -5,6 +5,7 @@ import (
 
 	userservice "github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
 	"github.com/gdan0324/ByteWeGo/user/service"
+	"github.com/gdan0324/ByteWeGo/user/utils"
 )
 
 // UserServiceImpl implements the last service interface defined in the IDL.
@@ -16,18 +17,18 @@ func (s *UserServiceImpl) CheckUser(ctx context.Context, req *userservice.CheckU
 
 	if err != nil {
 		return &userservice.CheckUserResponse{
-			StatusCode: 200,
-			StatusMsg:  "OK",
-			UserId:     id,
-			Token:      "token",
+			StatusCode: int32(userservice.ErrCode_ServiceErrCode),
+			StatusMsg:  err.Error(),
 		}, nil
 	}
 
+	token, _ := utils.GnerateToken(id)
+
 	return &userservice.CheckUserResponse{
-		StatusCode: 200,
+		StatusCode: 0,
 		StatusMsg:  "OK",
 		UserId:     id,
-		Token:      "token",
+		Token:      token,
 	}, nil
 }
 
@@ -37,16 +38,18 @@ func (s *UserServiceImpl) CreateUser(ctx context.Context, req *userservice.Creat
 
 	if err != nil {
 		return &userservice.CreateUserResponse{
-			StatusCode: 200,
-			StatusMsg:  "OK",
-			UserId:     id,
+			StatusCode: int32(userservice.ErrCode_ServiceErrCode),
+			StatusMsg:  err.Error(),
 		}, nil
 	}
+
+	token, _ := utils.GnerateToken(id)
 
 	return &userservice.CreateUserResponse{
 		StatusCode: 200,
 		StatusMsg:  "OK",
 		UserId:     id,
+		Token:      token,
 	}, nil
 }
 
@@ -56,14 +59,13 @@ func (s *UserServiceImpl) GetUser(ctx context.Context, req *userservice.GetUserR
 
 	if err != nil {
 		return &userservice.GetUserResponse{
-			StatusCode: 200,
-			StatusMsg:  "OK",
-			User:       user,
+			StatusCode: int32(userservice.ErrCode_ServiceErrCode),
+			StatusMsg:  err.Error(),
 		}, nil
 	}
 
 	return &userservice.GetUserResponse{
-		StatusCode: 200,
+		StatusCode: 0,
 		StatusMsg:  "OK",
 		User:       user,
 	}, nil
