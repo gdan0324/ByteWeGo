@@ -23,7 +23,10 @@ func (s *GetUserService) GetUser(req *userservice.GetUserRequest) (*userservice.
 		return nil, err
 	}
 	user := &userservice.User{
-		Name: modelUser.Username,
+		Id:            modelUser.UserId,
+		Name:          modelUser.Username,
+		FollowCount:   modelUser.FollowCount,
+		FollowerCount: modelUser.FollowerCount,
 	}
 	return user, nil
 }

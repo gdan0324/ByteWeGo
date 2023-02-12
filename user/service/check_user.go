@@ -33,7 +33,9 @@ func (s *CheckUserService) CheckUser(req *userservice.CheckUserRequest) (int64, 
 
 	userName := req.Username
 	user, err := db.QueryUser(s.ctx, userName)
-	log.Println("-------------")
+
+	log.Println(user)
+
 	if err != nil {
 		return 0, err
 	}
@@ -44,5 +46,5 @@ func (s *CheckUserService) CheckUser(req *userservice.CheckUserRequest) (int64, 
 	if user.Password != passWord {
 		return 0, errno.AuthorizationFailedErr
 	}
-	return int64(user.Id), nil
+	return user.UserId, nil
 }

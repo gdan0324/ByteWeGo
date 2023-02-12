@@ -46,7 +46,7 @@ func (s *UserServiceImpl) CreateUser(ctx context.Context, req *userservice.Creat
 	token, _ := utils.GnerateToken(id)
 
 	return &userservice.CreateUserResponse{
-		StatusCode: 200,
+		StatusCode: 0,
 		StatusMsg:  "OK",
 		UserId:     id,
 		Token:      token,
