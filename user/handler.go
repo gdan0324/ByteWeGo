@@ -33,12 +33,38 @@ func (s *UserServiceImpl) CheckUser(ctx context.Context, req *userservice.CheckU
 
 // CreateUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) CreateUser(ctx context.Context, req *userservice.CreateUserRequest) (resp *userservice.CreateUserResponse, err error) {
-	// TODO: Your code here...
-	return
+	id, err := service.NewCreateUserService(ctx).CreateUser(req)
+
+	if err != nil {
+		return &userservice.CreateUserResponse{
+			StatusCode: 200,
+			StatusMsg:  "OK",
+			UserId:     id,
+		}, nil
+	}
+
+	return &userservice.CreateUserResponse{
+		StatusCode: 200,
+		StatusMsg:  "OK",
+		UserId:     id,
+	}, nil
 }
 
 // GetUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) GetUser(ctx context.Context, req *userservice.GetUserRequest) (resp *userservice.GetUserResponse, err error) {
-	// TODO: Your code here...
-	return
+	user, err := service.NewGetUserService(ctx).GetUser(req)
+
+	if err != nil {
+		return &userservice.GetUserResponse{
+			StatusCode: 200,
+			StatusMsg:  "OK",
+			User:       user,
+		}, nil
+	}
+
+	return &userservice.GetUserResponse{
+		StatusCode: 200,
+		StatusMsg:  "OK",
+		User:       user,
+	}, nil
 }
