@@ -9,8 +9,8 @@ struct User {
 }
 
 struct CheckUserRequest {
-    1: string username (vt.max_size = "32")
-    2: string password (vt.max_size = "32")
+    1: required string username (vt.max_size = "32")
+    2: required string password (vt.max_size = "32")
 }
 
 struct CheckUserResponse {
@@ -21,8 +21,8 @@ struct CheckUserResponse {
 }
 
 struct CreateUserRequest {
-    1: string username (vt.max_size = "32")
-    2: string password (vt.max_size = "32")
+    1: required string username (vt.max_size = "32")
+    2: required string password (vt.max_size = "32")
 }
 
 struct CreateUserResponse {
@@ -33,8 +33,8 @@ struct CreateUserResponse {
 }
 
 struct GetUserRequest {
-    1: i64 user_id
-    2: string token
+    1: required i64 user_id
+    2: required string token
 }
 
 struct GetUserResponse {

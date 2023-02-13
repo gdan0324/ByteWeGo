@@ -5,6 +5,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/gdan0324/ByteWeGo/api/pkg/errno"
 	"github.com/gdan0324/ByteWeGo/user/dal/db"
@@ -21,22 +22,31 @@ func NewCreateUserService(ctx context.Context) *CreateUserService {
 }
 
 // CreateUser create user info.
-func (s *CreateUserService) CreateUser(req *userservice.CreateUserRequest) error {
-	users, err := db.QueryUser(s.ctx, req.Username)
+func (s *CreateUserService) CreateUser(req *userservice.CreateUserRequest) (int64, error) {
+	log.Println("CreateUser")
+	user, err := db.QueryUser(s.ctx, req.Username)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	if users != nil {
-		return errno.UserAlreadyExistErr
+	log.Println(user)
+	if user.UserId != 0 {
+		return 0, errno.UserAlreadyExistErr
 	}
 
 	h := md5.New()
 	if _, err = io.WriteString(h, req.Password); err != nil {
-		return err
+		return 0, err
 	}
 	password := fmt.Sprintf("%x", h.Sum(nil))
-	return db.CreateUser(s.ctx, []*db.User{{
+
+	user = &db.User{
 		Username: req.Username,
 		Password: password,
-	}})
+	}
+	err = db.CreateUser(s.ctx, user)
+	if err != nil {
+		return 0, err
+	}
+
+	return user.UserId, nil
 }

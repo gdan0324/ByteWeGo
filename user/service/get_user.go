@@ -5,6 +5,7 @@ import (
 
 	"github.com/gdan0324/ByteWeGo/user/dal/db"
 	"github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
+	"github.com/gdan0324/ByteWeGo/user/utils"
 )
 
 type GetUserService struct {
@@ -22,8 +23,19 @@ func (s *GetUserService) GetUser(req *userservice.GetUserRequest) (*userservice.
 	if err != nil {
 		return nil, err
 	}
+
+	claims, err := utils.ParseToken(req.Token)
+	if err != nil {
+		return nil, err
+	}
+
+	isFollow, _ := db.GetFollow(s.ctx, claims["Id"].(int64), req.UserId)
 	user := &userservice.User{
-		Name: modelUser.Username,
+		Id:            modelUser.UserId,
+		Name:          modelUser.Username,
+		FollowCount:   modelUser.FollowCount,
+		FollowerCount: modelUser.FollowerCount,
+		IsFollow:      isFollow,
 	}
 	return user, nil
 }

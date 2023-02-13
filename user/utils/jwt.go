@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GnerateToken(userId string) (string, error) {
+func GnerateToken(userId int64) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Hour * 24 * 7)
 	issuer := "ByteWeGo"
@@ -20,7 +20,7 @@ func GnerateToken(userId string) (string, error) {
 	return token.SignedString([]byte("golang"))
 }
 
-func ParseToken(token string) (*jwt.MapClaims, error) {
+func ParseToken(token string) (jwt.MapClaims, error) {
 	tokenClaims, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 		return []byte("golang"), nil
 	})
@@ -30,7 +30,7 @@ func ParseToken(token string) (*jwt.MapClaims, error) {
 	}
 
 	if tokenClaims != nil {
-		if claims, ok := tokenClaims.Claims.(*jwt.MapClaims); ok && tokenClaims.Valid {
+		if claims, ok := tokenClaims.Claims.(jwt.MapClaims); ok && tokenClaims.Valid {
 			return claims, nil
 		}
 	}
