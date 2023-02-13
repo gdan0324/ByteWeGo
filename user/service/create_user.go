@@ -25,11 +25,11 @@ func NewCreateUserService(ctx context.Context) *CreateUserService {
 func (s *CreateUserService) CreateUser(req *userservice.CreateUserRequest) (int64, error) {
 	log.Println("CreateUser")
 	user, err := db.QueryUser(s.ctx, req.Username)
-	if err != nil {
+	if err != nil && err.Error() != "record not found" {
 		return 0, err
 	}
-	log.Println(user)
-	if user.UserId != 0 {
+
+	if user != nil && user.UserId != 0 {
 		return 0, errno.UserAlreadyExistErr
 	}
 

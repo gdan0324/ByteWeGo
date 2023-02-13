@@ -13,7 +13,7 @@ type Follow struct {
 }
 
 func (u *Follow) TableName() string {
-	return consts.UserTableName
+	return consts.FollowTableName
 }
 
 // GetUsers multiple get list of user info
@@ -23,5 +23,8 @@ func GetFollow(ctx context.Context, userID int64, followerId int64) (bool, error
 		return false, err
 	}
 	log.Println(follow)
+	if follow.UserId == 0 {
+		return false, nil
+	}
 	return true, nil
 }

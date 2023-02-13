@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	UserId        int64  `json:"user_id"`
+	UserId        int64  `json:"user_id" gorm:"primary_key"`
 	Username      string `json:"username"`
 	Password      string `json:"password"`
 	FollowCount   int64  `json:"follow_count"`
@@ -35,9 +35,9 @@ func CreateUser(ctx context.Context, user *User) error {
 
 // QueryUser query list of user info
 func QueryUser(ctx context.Context, userName string) (*User, error) {
-	var res User
+	res := &User{}
 	if err := DB.WithContext(ctx).Where("username = ?", userName).First(&res).Error; err != nil {
 		return nil, err
 	}
-	return &res, nil
+	return res, nil
 }
