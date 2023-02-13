@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"github.com/gdan0324/ByteWeGo/user/dal/db"
 	"github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
@@ -29,7 +30,12 @@ func (s *GetUserService) GetUser(req *userservice.GetUserRequest) (*userservice.
 		return nil, err
 	}
 
-	isFollow, _ := db.GetFollow(s.ctx, claims["Id"].(int64), req.UserId)
+	log.Println(claims)
+	isFollow, err := db.GetFollow(s.ctx, int64(claims["Id"].(float64)), req.UserId)
+	if err != nil {
+		return nil, err
+	}
+
 	user := &userservice.User{
 		Id:            modelUser.UserId,
 		Name:          modelUser.Username,
