@@ -1,20 +1,23 @@
 package consts
 
 const (
-	UserTableName = "user"
-	SecretKey     = "secret key"
-	IdentityKey   = "id"
-	Total         = "total"
-	Notes         = "notes"
+	UserTableName   = "user"
+	FollowTableName = "follow"
+	SecretKey       = "secret key"
+	IdentityKey     = "id"
+	Total           = "total"
+	Notes           = "notes"
 	// TODO: change to current service name
-	ApiServiceName  = "apiservice"
-	UserServiceName = "userservice"
-	MySQLDefaultDSN = "root:n7Zs3usIM15HlkvQ@tcp(120.46.190.10:3306)/bytewego?charset=utf8&parseTime=True&loc=Local"
-	TCP             = "tcp"
+	ApiServiceName       = "apiservice"
+	UserServiceName      = "userservice"
+	CommunityServiceName = "communityservice"
+	MySQLDefaultDSN      = "bytewego:kidNRNKefWmMNky8@tcp(112.74.41.224:3306)/bytewego?charset=utf8&parseTime=True&loc=Local"
+	TCP                  = "tcp"
 	// service address
-	UserServiceAddr = ":9000"
-	NoteServiceAddr = ":10000"
-	ExportEndpoint  = ":4317"
-	ETCDAddress     = "127.0.0.1:2379"
-	DefaultLimit    = 10
+	UserServiceAddr      = ":9000"
+	CommunityServiceAddr = ":9001"
+	NoteServiceAddr      = ":10000"
+	ExportEndpoint       = ":4317"
+	ETCDAddress          = "127.0.0.1:2379"
+	DefaultLimit         = 10
 )

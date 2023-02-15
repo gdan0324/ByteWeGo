@@ -13,4 +13,10 @@ func customizedRegister(r *server.Hertz) {
 
 	// your code ...
 	r.POST("/user", handler.CheckUser)
+
+	r.POST("/douyin/relation/action", handler.Follow)
+
+	r.GET("/douyin/relation/follow/list", handler.FollowList)
+
+	r.GET("/douyin/relation/follower/list", handler.FollowerList)
 }
