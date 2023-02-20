@@ -46,12 +46,12 @@ type FavoriteActionParam struct {
 
 // 评论操作  handler 输入参数
 type CommentActionParam struct {
-	UserId      int64  `json:"user_id,omitempty"`      // 用户id
-	Token       string `json:"token,omitempty"`        // 用户鉴权token
-	VideoId     int64  `json:"video_id,omitempty"`     // 视频id
-	ActionType  int32  `json:"action_type,omitempty"`  // 1-发布评论，2-删除评论
-	CommentText string `json:"comment_text,omitempty"` // 用户填写的评论内容，在action_type=1的时候使用
-	CommentId   int64  `json:"comment_id,omitempty"`   // 要删除的评论id，在action_type=2的时候使用
+	UserId      int64   `json:"user_id,omitempty"`      // 用户id
+	Token       string  `json:"token,omitempty"`        // 用户鉴权token
+	VideoId     int64   `json:"video_id,omitempty"`     // 视频id
+	ActionType  int32   `json:"action_type,omitempty"`  // 1-发布评论，2-删除评论
+	CommentText *string `json:"comment_text,omitempty"` // 用户填写的评论内容，在action_type=1的时候使用
+	CommentId   *int64  `json:"comment_id,omitempty"`   // 要删除的评论id，在action_type=2的时候使用
 }
 
 // 获取评论列表 handler 输入参数
@@ -66,4 +66,5 @@ type RelationActionParam struct {
 	Token      string `form:"token,omitempty" json:"token,omitempty"`             // 用户鉴权token
 	ToUserId   int64  `form:"to_user_id,omitempty" json:"to_user_id,omitempty"`   // 对方用户id
 	ActionType int32  `form:"action_type,omitempty" json:"action_type,omitempty"` // 1-关注，2-取消关注
+	Content    string `form:"content,omitempty" json:"content,omitempty"`         // 消息发送内容
 }

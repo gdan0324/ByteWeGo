@@ -22,7 +22,7 @@ func Init() {
 			LogLevel:      logger.Info,
 		},
 	)
-	DSN := "root:1223@tcp(41065a2h49.zicp.fun:20128)/bytewego?charset=utf8&parseTime=True&loc=Local"
+	DSN := "root:12345678@tcp(127.0.0.1:3306)/bytewego?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(DSN),
 		&gorm.Config{
 			PrepareStmt: true,

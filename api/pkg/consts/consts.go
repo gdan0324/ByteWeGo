@@ -10,14 +10,13 @@ const (
 	// TODO: change to current service name
 	ApiServiceName       = "apiservice"
 	UserServiceName      = "userservice"
-	CommentServiceName   = "commentservice"
 	CommunityServiceName = "communityservice"
-	MySQLDefaultDSN      = "bytewego:kidNRNKefWmMNky8@tcp(112.74.41.224:3306)/bytewego?charset=utf8&parseTime=True&loc=Local"
+	CommentServiceName   = "commentservice"
+	MySQLDefaultDSN      = "root:12345678@tcp(127.0.0.1:3306)/bytewego?charset=utf8mb4&parseTime=True&loc=Local"
 	TCP                  = "tcp"
 	// service address
 	UserServiceAddr      = ":9000"
 	CommunityServiceAddr = ":9001"
-	CommentServiceAddr   = ":9002"
 	NoteServiceAddr      = ":10000"
 	ExportEndpoint       = ":4317"
 	ETCDAddress          = "127.0.0.1:2379"
