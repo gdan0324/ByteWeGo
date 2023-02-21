@@ -22,4 +22,8 @@ func customizedRegister(r *server.Hertz) {
 	r.GET("/douyin/relation/friend/list", handler.CheckFriend)
 
 	r.POST("/douyin/message/action", handler.MessageAction)
+
+	r.POST("/douyin/comment/action/", handler.CommentAction)
+
+	r.GET("/douyin/comment/list/", handler.GetComments)
 }
