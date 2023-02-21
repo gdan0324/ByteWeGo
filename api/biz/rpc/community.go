@@ -62,3 +62,21 @@ func FollowerList(ctx context.Context, req *communityservice2.GetFollowerRequest
 	}
 	return resp, nil
 }
+
+// check friend info
+func CheckFriend(ctx context.Context, req *communityservice2.CheckFriendRequest) (*communityservice2.CheckFriendResponse, error) {
+	resp, err := communityClient.CheckFriend(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// get message info
+func MessageAction(ctx context.Context, req *communityservice2.RelationActionRequest) (*communityservice2.RelationActionResponse, error) {
+	resp, err := communityClient.MessageAction(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

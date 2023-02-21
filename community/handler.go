@@ -64,3 +64,40 @@ func (s *CommunityServiceImpl) Follow(ctx context.Context, req *communityservice
 	}
 	return resp, nil
 }
+
+// CheckFriend implements the CommunityServiceImpl interface.
+func (s *CommunityServiceImpl) CheckFriend(ctx context.Context, req *communityservice.CheckFriendRequest) (resp *communityservice.CheckFriendResponse, err error) {
+	// TODO: Your code here...
+	friends, err := service.NewMGetFriendService(ctx).MGetFriends(req)
+	if err != nil {
+		resp = &communityservice.CheckFriendResponse{
+			StatusCode: 404,
+			StatusMsg:  "fail...",
+		}
+		return resp, err
+	}
+	resp = &communityservice.CheckFriendResponse{
+		StatusCode: 200,
+		StatusMsg:  "success...",
+		FriendList: friends,
+	}
+	return resp, nil
+}
+
+// MessageAction implements the CommunityServiceImpl interface.
+func (s *CommunityServiceImpl) MessageAction(ctx context.Context, req *communityservice.RelationActionRequest) (resp *communityservice.RelationActionResponse, err error) {
+	// TODO: Your code here...
+	msg, err := service.NewMessageService(ctx).MessageAction(req)
+	if err != nil {
+		resp = &communityservice.RelationActionResponse{
+			StatusCode: 404,
+			StatusMsg:  msg,
+		}
+		return resp, err
+	}
+	resp = &communityservice.RelationActionResponse{
+		StatusCode: 200,
+		StatusMsg:  msg,
+	}
+	return resp, nil
+}
