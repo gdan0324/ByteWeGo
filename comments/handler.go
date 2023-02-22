@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/gdan0324/ByteWeGo/api/pkg/jwt"
 	commentservice "github.com/gdan0324/ByteWeGo/comments/kitex_gen/commentservice"
 	"github.com/gdan0324/ByteWeGo/comments/service"
-	"github.com/gdan0324/ByteWeGo/user/utils"
 )
 
 // CommentServiceImpl implements the last service interface defined in the IDL.
@@ -14,7 +14,7 @@ type CommentServiceImpl struct{}
 // CommentAction implements the CommentServiceImpl interface.
 func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *commentservice.CommentActionRequest) (resp *commentservice.CommentActionResponse, err error) {
 	resp = commentservice.NewCommentActionResponse()
-	claims, err := utils.ParseToken(req.Token)
+	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		resp.SetStatusCode(20004)
 		resp.SetStatusMsg("token authorize err")
@@ -52,7 +52,7 @@ func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *commentserv
 // GetComments implements the CommentServiceImpl interface.
 func (s *CommentServiceImpl) GetComments(ctx context.Context, req *commentservice.GetCommentsRequest) (resp *commentservice.GetCommentsResponse, err error) {
 	resp = commentservice.NewGetCommentsResponse()
-	claims, err := utils.ParseToken(req.Token)
+	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		resp.SetStatusCode(20004)
 		resp.SetStatusMsg("token authorize err")

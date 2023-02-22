@@ -1,6 +1,7 @@
 package db
 
 import (
+	"github.com/gdan0324/ByteWeGo/api/pkg/consts"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -22,8 +23,7 @@ func Init() {
 			LogLevel:      logger.Info,
 		},
 	)
-	DSN := "root:12345678@tcp(127.0.0.1:3306)/bytewego?charset=utf8mb4&parseTime=True&loc=Local"
-	DB, err = gorm.Open(mysql.Open(DSN),
+	DB, err = gorm.Open(mysql.Open(consts.MySQLDefaultDSN),
 		&gorm.Config{
 			PrepareStmt: true,
 			Logger:      gormlogrus,

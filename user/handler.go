@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-
+	"github.com/gdan0324/ByteWeGo/api/pkg/jwt"
 	userservice "github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
 	"github.com/gdan0324/ByteWeGo/user/service"
-	"github.com/gdan0324/ByteWeGo/user/utils"
+	"strconv"
 )
 
 // UserServiceImpl implements the last service interface defined in the IDL.
@@ -22,7 +22,7 @@ func (s *UserServiceImpl) CheckUser(ctx context.Context, req *userservice.CheckU
 		}, nil
 	}
 
-	token, _ := utils.GnerateToken(id)
+	token, _ := jwt.GnerateToken(strconv.FormatInt(id, 10))
 
 	return &userservice.CheckUserResponse{
 		StatusCode: 0,
@@ -43,7 +43,7 @@ func (s *UserServiceImpl) CreateUser(ctx context.Context, req *userservice.Creat
 		}, nil
 	}
 
-	token, _ := utils.GnerateToken(id)
+	token, _ := jwt.GnerateToken(strconv.FormatInt(id, 10))
 
 	return &userservice.CreateUserResponse{
 		StatusCode: 0,
