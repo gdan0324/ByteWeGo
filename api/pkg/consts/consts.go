@@ -1,12 +1,14 @@
 package consts
 
 const (
-	UserTableName   = "user"
-	FollowTableName = "follow"
-	SecretKey       = "secret key"
-	IdentityKey     = "id"
-	Total           = "total"
-	Notes           = "notes"
+	UserTableName     = "user"
+	FollowTableName   = "follow"
+	VideoTableName    = "video"
+	FavoriteTableName = "favorite"
+	SecretKey         = "secret key"
+	IdentityKey       = "id"
+	Total             = "total"
+	Notes             = "notes"
 	// TODO: change to current service name
 	ApiServiceName       = "apiservice"
 	UserServiceName      = "userservice"
@@ -21,4 +23,6 @@ const (
 	ExportEndpoint       = ":4317"
 	ETCDAddress          = "127.0.0.1:2379"
 	DefaultLimit         = 10
+	FavoriteType         = 1
+	NoFavoriteType       = 2
 )
