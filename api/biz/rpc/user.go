@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	"github.com/gdan0324/ByteWeGo/api/kitex_gen/userservice"
-	userSvc "github.com/gdan0324/ByteWeGo/api/kitex_gen/userservice/userservice"
 	"github.com/gdan0324/ByteWeGo/api/pkg/consts"
 	"github.com/gdan0324/ByteWeGo/api/pkg/mw"
+	"github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
+	userSvc "github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice/userservice"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
