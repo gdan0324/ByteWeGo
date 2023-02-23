@@ -13,6 +13,8 @@ import (
 	"image"
 	"image/jpeg"
 	"os"
+	"strconv"
+	"time"
 )
 
 type CreateVideoService struct {
@@ -26,12 +28,14 @@ func NewCreateVideoService(ctx context.Context) *CreateVideoService {
 
 // CreateVideo create video info.
 func (s *CreateVideoService) CreateVideo(req *videoservice.CreateVideoRequest) error {
-	claim, err := jwt.ParseToken(req.Token)
-	userId := claim["userId"].(int64)
+	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		return err
 	}
-	//userId := int64(1)
+	userId, err := strconv.Atoi(claims["Id"].(string))
+	if err != nil {
+		return err
+	}
 	MinioBucketName := minio.VideoBucketName
 	videoData := req.Data
 	reader := bytes.NewReader(videoData)
@@ -76,10 +80,11 @@ func (s *CreateVideoService) CreateVideo(req *videoservice.CreateVideoRequest) e
 	}
 
 	video := &db.Video{
-		UserId:   userId,
-		PlayUrl:  url.String(),
-		CoverUrl: coverUrl.String(),
-		Title:    req.Title,
+		UserId:     int64(userId),
+		PlayUrl:    url.String(),
+		CoverUrl:   coverUrl.String(),
+		Title:      req.Title,
+		CreateTime: time.Now(),
 	}
 	return db.CreateVideo(s.ctx, video)
 }

@@ -3,14 +3,18 @@
 package api
 
 import (
+	"bytes"
 	"context"
+	"github.com/gdan0324/ByteWeGo/api/biz/handler"
+	"github.com/gdan0324/ByteWeGo/video/kitex_gen/videoservice"
+	"io"
 	"log"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	api "github.com/gdan0324/ByteWeGo/api/biz/model/api"
 	"github.com/gdan0324/ByteWeGo/api/biz/rpc"
-	"github.com/gdan0324/ByteWeGo/api/kitex_gen/userservice"
+	"github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
 )
 
 // CheckUser .
@@ -88,5 +92,91 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	c.JSON(consts.StatusOK, resp)
+}
+
+// CreateVideo .
+// @router /douyin/publish/action [POST]
+func CreateVideo(ctx context.Context, c *app.RequestContext) {
+	var paramVar handler.PublishActionParam
+	token := c.PostForm("token")
+	title := c.PostForm("title")
+
+	fileHeader, err := c.Request.FormFile("data")
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	file, err := fileHeader.Open()
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+	defer file.Close()
+
+	buf := bytes.NewBuffer(nil)
+	if _, err := io.Copy(buf, file); err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	paramVar.Token = token
+	paramVar.Title = title
+
+	resp, err := rpc.CreateVideo(ctx, &videoservice.CreateVideoRequest{
+		Title: paramVar.Title,
+		Token: paramVar.Token,
+		Data:  buf.Bytes(),
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// GetVideoList .
+// @router /douyin/publish/list [GET]
+func GetVideoList(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.GetVideoListRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := rpc.GetVideoList(ctx, &videoservice.GetVideoListRequest{
+		UserId: req.UserID,
+		Token:  req.Token,
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+	c.JSON(consts.StatusOK, resp)
+}
+
+// GetFeed .
+// @router /douyin/feed [GET]
+func GetFeed(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.GetFeedRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := rpc.GetFeed(ctx, &videoservice.GetFeedRequest{
+		LatestTime: req.GetLatestTime(),
+		Token:      req.GetToken(),
+	})
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
 	c.JSON(consts.StatusOK, resp)
 }

@@ -13,6 +13,7 @@ import (
 type Client interface {
 	CreateVideo(ctx context.Context, req *videoservice.CreateVideoRequest, callOptions ...callopt.Option) (r *videoservice.CreateVideoResponse, err error)
 	GetVideoList(ctx context.Context, req *videoservice.GetVideoListRequest, callOptions ...callopt.Option) (r *videoservice.GetVideoListResponse, err error)
+	GetFeed(ctx context.Context, req *videoservice.GetFeedRequest, callOptions ...callopt.Option) (r *videoservice.GetFeedResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -52,4 +53,9 @@ func (p *kVideoServiceClient) CreateVideo(ctx context.Context, req *videoservice
 func (p *kVideoServiceClient) GetVideoList(ctx context.Context, req *videoservice.GetVideoListRequest, callOptions ...callopt.Option) (r *videoservice.GetVideoListResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetVideoList(ctx, req)
+}
+
+func (p *kVideoServiceClient) GetFeed(ctx context.Context, req *videoservice.GetFeedRequest, callOptions ...callopt.Option) (r *videoservice.GetFeedResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFeed(ctx, req)
 }

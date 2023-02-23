@@ -9,10 +9,9 @@ import (
 )
 
 func CommentAction(ctx context.Context, c *app.RequestContext) {
-	token := c.Query("token")
-	video_id := c.Query("video_id")
-	action_type := c.Query("action_type")
-
+	token := c.PostForm("token")
+	video_id := c.PostForm("video_id")
+	action_type := c.PostForm("action_type")
 	paramVideoId, err := strconv.Atoi(video_id)
 	if err != nil {
 		SendResponse(c, &commentservice.CommentActionResponse{
@@ -36,10 +35,10 @@ func CommentAction(ctx context.Context, c *app.RequestContext) {
 		UserId:     111,
 	}
 	if paramActionType == 1 {
-		comment_text := c.Query("comment_text")
+		comment_text := c.PostForm("comment_text")
 		rpcReq.SetCommentText(comment_text)
 	} else {
-		comment_id := c.Query("comment_id")
+		comment_id := c.PostForm("comment_id")
 		paramCommentId, err := strconv.Atoi(comment_id)
 		if err != nil {
 			SendResponse(c, &commentservice.CommentActionResponse{

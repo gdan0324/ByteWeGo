@@ -2,16 +2,18 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"github.com/gdan0324/ByteWeGo/api/pkg/consts"
 )
 
 type User struct {
-	UserId        int64  `json:"user_id" gorm:"primary_key"`
-	Username      string `json:"username"`
-	Password      string `json:"password"`
-	FollowCount   int64  `json:"follow_count"`
-	FollowerCount int64  `json:"follower_count"`
+	UserId        int64     `json:"user_id" gorm:"primary_key"`
+	Username      string    `json:"username"`
+	Password      string    `json:"password"`
+	FollowCount   int64     `json:"follow_count"`
+	FollowerCount int64     `json:"follower_count"`
+	CreateTime    time.Time `json:"create_time"`
 }
 
 func (u *User) TableName() string {

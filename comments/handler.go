@@ -6,6 +6,7 @@ import (
 	"github.com/gdan0324/ByteWeGo/api/pkg/jwt"
 	commentservice "github.com/gdan0324/ByteWeGo/comments/kitex_gen/commentservice"
 	"github.com/gdan0324/ByteWeGo/comments/service"
+	"strconv"
 )
 
 // CommentServiceImpl implements the last service interface defined in the IDL.
@@ -20,10 +21,15 @@ func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *commentserv
 		resp.SetStatusMsg("token authorize err")
 		return resp, err
 	}
-	claimID := int64(claims["Id"].(float64))
-
+	if err != nil {
+		return nil, err
+	}
+	claimID, err := strconv.Atoi(claims["Id"].(string))
+	if err != nil {
+		return nil, err
+	}
 	if req.UserId == 0 || claimID != 0 {
-		req.UserId = claimID
+		req.UserId = int64(claimID)
 	}
 
 	fmt.Println("進入commentaction请求 ", req.VideoId, " ", req.UserId, " ", req.ActionType)
@@ -33,7 +39,7 @@ func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *commentserv
 		return resp, nil
 	}
 
-	newcomment, err := service.NewCommentActionService(ctx).CommentAction(req, claimID)
+	newcomment, err := service.NewCommentActionService(ctx).CommentAction(req, req.UserId)
 	if err != nil {
 		resp.SetStatusCode(20002)
 		resp.SetStatusMsg("database err, action failed ")
@@ -67,7 +73,11 @@ func (s *CommentServiceImpl) GetComments(ctx context.Context, req *commentservic
 		return resp, nil // err para
 	}
 
-	comments, err := service.NewGetCommentsService(ctx).GetComments(req, int64(claims["Id"].(float64)))
+	userId, err := strconv.Atoi(claims["Id"].(string))
+	if err != nil {
+		return nil, err
+	}
+	comments, err := service.NewGetCommentsService(ctx).GetComments(req, int64(userId))
 	if err != nil {
 		resp.SetStatusCode(20002)
 		resp.SetStatusMsg("get comments database error!")

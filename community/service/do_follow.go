@@ -25,6 +25,9 @@ func (s *FollowService) Follow(req *communityservice.FollowRequest) (string, err
 		return "fail", err
 	}
 	userId, err := strconv.Atoi(claim["Id"].(string))
+	if err != nil {
+		return "fail", err
+	}
 	followId := req.ToUserId
 	if actionType == 1 {
 		err := db.NewFollow(s.ctx, int64(userId), followId)

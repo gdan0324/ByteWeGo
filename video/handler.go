@@ -13,7 +13,6 @@ type VideoServiceImpl struct{}
 // CreateVideo implements the VideoServiceImpl interface.
 func (s *VideoServiceImpl) CreateVideo(ctx context.Context, req *videoservice.CreateVideoRequest) (resp *videoservice.CreateVideoResponse, err error) {
 	// TODO: Your code here...
-	//fmt.Printf("%d %d\n", u64, int64(u64))
 	err = service.NewCreateVideoService(ctx).CreateVideo(req)
 	if err != nil {
 		resp = &videoservice.CreateVideoResponse{
@@ -44,6 +43,27 @@ func (s *VideoServiceImpl) GetVideoList(ctx context.Context, req *videoservice.G
 		StatusCode: 0,
 		StatusMsg:  "success...",
 		VideoList:  msg,
+	}
+	return resp, nil
+}
+
+// GetFeed implements the VideoServiceImpl interface.
+func (s *VideoServiceImpl) GetFeed(ctx context.Context, req *videoservice.GetFeedRequest) (resp *videoservice.GetFeedResponse, err error) {
+	res, nextTime, err := service.NewGetFeedService(ctx).GetFeed(req)
+	if err != nil {
+		resp = &videoservice.GetFeedResponse{
+			StatusCode: 500,
+			StatusMsg:  "fail..",
+			VideoList:  nil,
+			NextTime:   nextTime,
+		}
+		return resp, err
+	}
+	resp = &videoservice.GetFeedResponse{
+		StatusCode: 0,
+		StatusMsg:  "success..",
+		VideoList:  res,
+		NextTime:   nextTime,
 	}
 	return resp, nil
 }

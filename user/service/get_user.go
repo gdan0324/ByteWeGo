@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
+	"github.com/gdan0324/ByteWeGo/api/pkg/jwt"
 	"log"
+	"strconv"
 
 	"github.com/gdan0324/ByteWeGo/user/dal/db"
 	"github.com/gdan0324/ByteWeGo/user/kitex_gen/userservice"
-	"github.com/gdan0324/ByteWeGo/user/utils"
 )
 
 type GetUserService struct {
@@ -25,13 +26,16 @@ func (s *GetUserService) GetUser(req *userservice.GetUserRequest) (*userservice.
 		return nil, err
 	}
 
-	claims, err := utils.ParseToken(req.Token)
+	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
-
+	userId, err := strconv.Atoi(claims["Id"].(string))
+	if err != nil {
+		return nil, err
+	}
 	log.Println(claims)
-	isFollow, err := db.GetFollow(s.ctx, int64(claims["Id"].(float64)), req.UserId)
+	isFollow, err := db.GetFollow(s.ctx, int64(userId), req.UserId)
 	if err != nil {
 		return nil, err
 	}

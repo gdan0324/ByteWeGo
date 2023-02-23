@@ -3,7 +3,7 @@ module github.com/gdan0324/ByteWeGo/video
 go 1.18
 
 require (
-	github.com/apache/thrift v0.13.0
+	github.com/apache/thrift v0.17.0
 	github.com/cloudwego/kitex v0.4.4
 	github.com/gdan0324/ByteWeGo/api v0.0.0-20230222092415-667980f94943
 	github.com/gdan0324/ByteWeGo/user v0.0.0-20230221070607-78f31135ef9e
@@ -63,6 +63,7 @@ require (
 	golang.org/x/arch v0.0.0-20220722155209-00200b7164a7 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect

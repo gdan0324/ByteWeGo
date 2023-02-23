@@ -42,7 +42,20 @@ struct CreateVideoResponse {
     2: string status_msg
 }
 
+struct GetFeedRequest {
+    1: i64 latest_time
+    2: string token
+}
+
+struct GetFeedResponse {
+    1: i32 status_code
+    2: string status_msg
+    3: list<Video> video_list
+    4: i64 next_time
+}
+
 service VideoService {
     CreateVideoResponse CreateVideo(1: CreateVideoRequest req)
     GetVideoListResponse GetVideoList(1: GetVideoListRequest req)
+    GetFeedResponse GetFeed(1: GetFeedRequest req)
 }

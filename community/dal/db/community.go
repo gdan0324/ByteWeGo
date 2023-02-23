@@ -75,7 +75,7 @@ func MGetFollowers(ctx context.Context, userId int64) ([]*FollowInfo, error) {
 
 func NewFollow(ctx context.Context, userId int64, followId int64) error {
 	err := DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		err := tx.Create(&Follow{
+		err := tx.Table("follow").Create(&Follow{
 			UserId:   userId,
 			FollowId: followId,
 		}).Error
@@ -176,7 +176,7 @@ func DisFollow(ctx context.Context, userId int64, followId int64) error {
 	return err
 }
 
-// GetFriend multiple get list of frienduser info
+// MGetFriends GetFriend multiple get list of frienduser info
 func MGetFriends(ctx context.Context, userId int64) ([]*FollowInfo, error) {
 	res := make([]*FollowInfo, 0)
 	err := DB.WithContext(ctx).Table("friends f").
@@ -197,7 +197,7 @@ func GetLastMessage(ctx context.Context, userId int64, toUserId int64) (string, 
 	return content, nil
 }
 
-// MessageAction info
+// NewMessage MessageAction info
 func NewMessage(ctx context.Context, userId int64, toUserId int64, content string) error {
 	err := DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		contentmessage := make([]*Message, 0)
@@ -215,7 +215,7 @@ func NewMessage(ctx context.Context, userId int64, toUserId int64, content strin
 				return res.Error
 			}
 		} else {
-			err := tx.Create(&Message{
+			err := tx.Table("message").Create(&Message{
 				FromUserId: userId,
 				ToUserId:   toUserId,
 				Content:    content,

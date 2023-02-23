@@ -35,3 +35,23 @@ func _createuserMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _publishMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _createvideoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getvideolistMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getfeedMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

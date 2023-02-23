@@ -3,8 +3,9 @@ module github.com/gdan0324/ByteWeGo/user
 go 1.18
 
 require (
-	github.com/apache/thrift v0.13.0
+	github.com/apache/thrift v0.17.0
 	github.com/cloudwego/kitex v0.4.4
+	github.com/gdan0324/ByteWeGo/api v0.0.0-20230222135805-50c90a87732f
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.24.3
 	gorm.io/plugin/opentelemetry v0.1.0
@@ -31,7 +32,7 @@ require (
 	github.com/cloudwego/frugal v0.1.3 // indirect
 	github.com/cloudwego/netpoll v0.3.1 // indirect
 	github.com/cloudwego/thriftgo v0.2.4 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/pprof v0.0.0-20220608213341-c488b8fa1db3 // indirect
@@ -44,7 +45,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/oleiade/lane v1.0.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/tidwall/gjson v1.9.3 // indirect
+	github.com/tidwall/gjson v1.13.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	go.opentelemetry.io/otel v1.8.0 // indirect

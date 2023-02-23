@@ -9,7 +9,6 @@ import (
 	"github.com/gdan0324/ByteWeGo/api/pkg/mw"
 	"github.com/gdan0324/ByteWeGo/community/dal"
 	"github.com/gdan0324/ByteWeGo/community/kitex_gen/communityservice/communityservice"
-	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"net"
 )
@@ -35,7 +34,6 @@ func main() {
 		server.WithMuxTransport(),
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
-		server.WithSuite(tracing.NewServerSuite()),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.CommunityServiceName}),
 	)
 	err = svr.Run()

@@ -12,9 +12,7 @@ import (
 
 func Follow(ctx context.Context, c *app.RequestContext) {
 	var paramVar RelationActionParam
-	//todo token
-	//token := c.PostForm("token")
-	paramVar.Token, _ = jwt.GnerateToken("112")
+	token := c.PostForm("token")
 	toUserId := c.PostForm("to_user_id")
 	actionType := c.PostForm("action_type")
 	tid, err := strconv.Atoi(toUserId)
@@ -27,6 +25,7 @@ func Follow(ctx context.Context, c *app.RequestContext) {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
+	paramVar.Token = token
 	paramVar.ToUserId = int64(tid)
 	paramVar.ActionType = int32(act)
 	resp, err := rpc.Follow(ctx, &communityservice2.FollowRequest{

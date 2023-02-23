@@ -67,7 +67,7 @@ struct GetVideoListResponse {
 
 struct CreateVideoRequest {
     1: string token
-    2: list<byte> data
+    2: binary data
     3: string title
 }
 
@@ -76,10 +76,23 @@ struct CreateVideoResponse {
     2: string status_msg
 }
 
+struct GetFeedRequest {
+    1: i64 latest_time
+    2: string token
+}
+
+struct GetFeedResponse {
+    1: i32 status_code
+    2: string status_msg
+    3: list<Video> video_list
+    4: i64 next_time
+}
+
 service ApiService {
     CheckUserResponse CheckUser(1: CheckUserRequest req) (api.post="/douyin/user/login")
     CreateUserResponse CreateUser(1: CreateUserRequest req) (api.post="/douyin/user/register")
     GetUserResponse GetUser(1: GetUserRequest req) (api.get="/douyin/user")
     CreateVideoResponse CreateVideo(1: CreateVideoRequest req) (api.post="/douyin/publish/action")
     GetVideoListResponse GetVideoList(1: GetVideoListRequest req) (api.get="/douyin/publish/list")
+    GetFeedResponse GetFeed(1: GetFeedRequest req) (api.get="/douyin/feed")
 }

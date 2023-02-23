@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	"github.com/gdan0324/ByteWeGo/api/pkg/errno"
 	"github.com/gdan0324/ByteWeGo/user/dal/db"
@@ -40,8 +41,9 @@ func (s *CreateUserService) CreateUser(req *userservice.CreateUserRequest) (int6
 	password := fmt.Sprintf("%x", h.Sum(nil))
 
 	user = &db.User{
-		Username: req.Username,
-		Password: password,
+		Username:   req.Username,
+		Password:   password,
+		CreateTime: time.Now(),
 	}
 	err = db.CreateUser(s.ctx, user)
 	if err != nil {
